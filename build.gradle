@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "7.1.0"
+}
+
+group 'net.tonimatasdev'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.Minestom:Minestom:c496ee3572'
+    implementation 'de.articdive:jnoise-pipeline:4.0.0'
+}
+
+mainClassName = 'net.tonimatasdev.Main'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.tonimatasdev.Main', "Multi-Release": true
+    }
+}
