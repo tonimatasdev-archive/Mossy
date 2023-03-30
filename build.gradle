@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Minestom:Minestom:c496ee3572'
+    implementation 'com.github.Minestom:Minestom:-SNAPSHOT'
     implementation 'de.articdive:jnoise-pipeline:4.0.0'
 }
 
