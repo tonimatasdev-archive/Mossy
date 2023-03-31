@@ -10,11 +10,14 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven {
+        url "https://repo.spongepowered.org/repository/maven-public/"
+    }
 }
 
 dependencies {
     implementation 'com.github.Minestom:Minestom:-SNAPSHOT'
-    implementation 'de.articdive:jnoise-pipeline:4.0.0'
+    implementation 'de.articdive:jnoise:3.0.2'
 }
 
 mainClassName = 'net.tonimatasdev.Main'

@@ -10,6 +10,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.world.DimensionType;
+import net.tonimatasdev.generator.NoiseGenerator;
 import net.tonimatasdev.init.ItemInit;
 import net.tonimatasdev.init.PlayerInit;
 import net.tonimatasdev.manager.Command;
@@ -21,11 +22,7 @@ public class Main {
         SharedInstance sharedInstance = MinecraftServer.getInstanceManager().createSharedInstance(overworld);
 
         //instanceContainer.setGenerator(new NoiseGenerator());
-        overworld.setGenerator(unit -> {
-            unit.modifier().fillHeight(-64, -63, Block.BEDROCK);
-            unit.modifier().fillHeight(-63, 62, Block.STONE);
-            unit.modifier().fillHeight(62, 63, Block.GRASS_BLOCK);
-        });
+        overworld.setGenerator(new NoiseGenerator());
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         PlayerInit.register(eventHandler);
@@ -37,7 +34,7 @@ public class Main {
         eventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
             event.setSpawningInstance(overworld);
-            player.setRespawnPoint(new Pos(0, 64, 0));
+            player.setRespawnPoint(new Pos(0, 100, 0));
 
             player.setGameMode(GameMode.CREATIVE);
         });
