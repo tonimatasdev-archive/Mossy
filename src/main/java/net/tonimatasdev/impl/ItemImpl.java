@@ -1,4 +1,4 @@
-package net.tonimatasdev.init;
+package net.tonimatasdev.impl;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -10,9 +10,9 @@ import net.minestom.server.event.item.PickupItemEvent;
 
 import java.time.Duration;
 
-public class ItemInit {
+public class ItemImpl {
     public static void register(GlobalEventHandler eventHandler) {
-        eventHandler.addListener(PickupItemEvent .class, event -> {
+        eventHandler.addListener(PickupItemEvent.class, event -> {
             if (event.getEntity() instanceof Player player) {
                 player.getInventory().addItemStack(event.getItemStack());
             }

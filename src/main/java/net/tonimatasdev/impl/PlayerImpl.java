@@ -1,4 +1,4 @@
-package net.tonimatasdev.init;
+package net.tonimatasdev.impl;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -10,7 +10,7 @@ import net.minestom.server.item.ItemStack;
 
 import java.util.Objects;
 
-public class PlayerInit {
+public class PlayerImpl {
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PlayerBlockBreakEvent.class, event -> {
             if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
@@ -22,6 +22,4 @@ public class PlayerInit {
             }
         });
     }
-
-
 }

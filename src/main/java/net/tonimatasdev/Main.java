@@ -8,11 +8,11 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.SharedInstance;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.world.DimensionType;
 import net.tonimatasdev.generator.NoiseGenerator;
-import net.tonimatasdev.init.ItemInit;
-import net.tonimatasdev.init.PlayerInit;
+import net.tonimatasdev.impl.BlockImpl;
+import net.tonimatasdev.impl.ItemImpl;
+import net.tonimatasdev.impl.PlayerImpl;
 import net.tonimatasdev.manager.Command;
 
 public class Main {
@@ -25,8 +25,9 @@ public class Main {
         overworld.setGenerator(new NoiseGenerator());
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
-        PlayerInit.register(eventHandler);
-        ItemInit.register(eventHandler);
+        BlockImpl.register(eventHandler);
+        ItemImpl.register(eventHandler);
+        PlayerImpl.register(eventHandler);
 
 
         Command.register();
