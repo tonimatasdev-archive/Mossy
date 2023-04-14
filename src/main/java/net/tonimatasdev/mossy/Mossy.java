@@ -1,16 +1,19 @@
-package net.tonimatasdev;
+package net.tonimatasdev.mossy;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
-import net.tonimatasdev.generator.NoiseGenerator;
-import net.tonimatasdev.impl.BlockImpl;
-import net.tonimatasdev.impl.ItemImpl;
-import net.tonimatasdev.impl.PlayerImpl;
-import net.tonimatasdev.manager.Command;
+import net.tonimatasdev.mossy.generator.NoiseGenerator;
+import net.tonimatasdev.mossy.impl.BlockImpl;
+import net.tonimatasdev.mossy.impl.ItemImpl;
+import net.tonimatasdev.mossy.impl.PlayerImpl;
+import net.tonimatasdev.mossy.manager.Command;
 
-public class Main {
+import java.util.logging.Logger;
+
+public class Mossy {
+    public static Logger logger = Logger.getLogger("Mossy");
     public static InstanceContainer overWorld;
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package net.tonimatasdev.data;
+package net.tonimatasdev.mossy.data;
 
 import net.minestom.server.item.Material;
 

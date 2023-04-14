@@ -1,4 +1,4 @@
-package net.tonimatasdev.generator;
+package net.tonimatasdev.mossy.generator;
 
 import de.articdive.jnoise.JNoise;
 import net.minestom.server.coordinate.Point;

@@ -1,4 +1,4 @@
-package net.tonimatasdev.impl;
+package net.tonimatasdev.mossy.impl;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -6,10 +6,11 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
+import net.minestom.server.event.player.PlayerChunkLoadEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
-import net.tonimatasdev.Main;
+import net.tonimatasdev.mossy.Mossy;
 
 import java.util.Objects;
 import java.util.Random;
@@ -18,16 +19,16 @@ public class PlayerImpl {
     @SuppressWarnings("UnstableApiUsage")
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PlayerLoginEvent.class, event -> {
-            event.setSpawningInstance(Main.overWorld);
+            event.setSpawningInstance(Mossy.overWorld);
 
             event.getPlayer().setGameMode(GameMode.SURVIVAL);
-            Main.overWorld.loadChunk(0, 0).join();
+            Mossy.overWorld.loadChunk(0, 0).join();
 
-            int y = Main.overWorld.getDimensionType().getMaxY();
+            int y = Mossy.overWorld.getDimensionType().getMaxY();
 
-            while (Block.AIR.compare(Main.overWorld.getBlock(0, y, 0))) {
+            while (Block.AIR.compare(Mossy.overWorld.getBlock(0, y, 0))) {
                 y--;
-                if (y == Main.overWorld.getDimensionType().getMinY()) {
+                if (y == Mossy.overWorld.getDimensionType().getMinY()) {
                     break;
                 }
             }
@@ -39,7 +40,7 @@ public class PlayerImpl {
                 ItemEntity item = new ItemEntity(ItemStack.of(Objects.requireNonNull(event.getBlock().registry().material())));
                 item.setPickable(true);
                 Random random = new Random();
-                item.setVelocity(new Vec(random.nextDouble() * (2.5 - (-2.5)) + (-2.5), 3.9, random.nextDouble() * (2.5 - (-2.5)) + (-2.5)));
+                item.setVelocity(new Vec(random.nextDouble() * (2.5 - (-2.5)) + (-2.5), 3.7, random.nextDouble() * (2.5 - (-2.5)) + (-2.5)));
                 item.setPose(event.getPlayer().getPose());
                 item.setInstance(event.getInstance(), new Pos(event.getBlockPosition().x() + 0.5, event.getBlockPosition().y() + 0.5, event.getBlockPosition().z() + 0.5));
             }

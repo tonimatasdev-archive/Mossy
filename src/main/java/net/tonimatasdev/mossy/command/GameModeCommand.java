@@ -1,4 +1,4 @@
-package net.tonimatasdev.command;
+package net.tonimatasdev.mossy.command;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -8,7 +8,6 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class GameModeCommand extends Command {
 

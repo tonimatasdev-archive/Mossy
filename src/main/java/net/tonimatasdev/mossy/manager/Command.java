@@ -1,10 +1,10 @@
-package net.tonimatasdev.manager;
+package net.tonimatasdev.mossy.manager;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
-import net.tonimatasdev.command.GameModeCommand;
+import net.tonimatasdev.mossy.command.GameModeCommand;
 
 public class Command {
     public static void register() {

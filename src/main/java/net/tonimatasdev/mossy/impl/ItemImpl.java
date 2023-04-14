@@ -1,4 +1,4 @@
-package net.tonimatasdev.impl;
+package net.tonimatasdev.mossy.impl;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
