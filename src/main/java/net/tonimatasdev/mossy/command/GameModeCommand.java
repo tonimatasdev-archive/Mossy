@@ -15,12 +15,10 @@ public class GameModeCommand extends Command {
         super("gamemode");
 
         ArgumentEnum<GameMode> gamemode = ArgumentType.Enum("gamemode", GameMode.class).setFormat(ArgumentEnum.Format.LOWER_CASED);
-        gamemode.setCallback((sender, exception) -> {
-            sender.sendMessage(
-                    Component.text("Invalid gamemode ", NamedTextColor.RED)
-                            .append(Component.text(exception.getInput(), NamedTextColor.WHITE))
-                            .append(Component.text("!")));
-        });
+        gamemode.setCallback((sender, exception) -> sender.sendMessage(
+                Component.text("Invalid gamemode ", NamedTextColor.RED)
+                        .append(Component.text(exception.getInput(), NamedTextColor.WHITE))
+                        .append(Component.text("!"))));
 
         ArgumentEntity player = ArgumentType.Entity("targets").onlyPlayers(true);
 
@@ -31,7 +29,6 @@ public class GameModeCommand extends Command {
         });
 
         addSyntax((sender, context) -> {
-            //Limit execution to players only
             if (!(sender instanceof Player p)) {
                 sender.sendMessage(Component.text("Please run this command in-game.", NamedTextColor.RED));
                 return;
@@ -45,7 +42,6 @@ public class GameModeCommand extends Command {
 
             GameMode mode = context.get(gamemode);
 
-            //Set the gamemode for the sender
             executeSelf(p, mode);
         }, gamemode);
 
@@ -53,8 +49,6 @@ public class GameModeCommand extends Command {
 
     private void executeSelf(Player sender, GameMode mode) {
         sender.setGameMode(mode);
-
-        //Send the translated message to the player.
         sender.sendMessage(Component.text("Tu modo de juego ahora es: " + mode.name()));
     }
 }
