@@ -23,6 +23,8 @@ public class ItemImpl {
             Pos pos = event.getPlayer().getPosition();
 
             item.setPickable(true);
+            item.setMergeable(true);
+            item.setMergeRange(1.6f);
             item.setPickupDelay(Duration.ofMillis(2500));
             item.setInstance(event.getInstance(), new Pos(pos.x() + 0.5, pos.y() + 0.5, pos.z() + 0.5));
             item.setVelocity(new Vec(0, 1, 0));

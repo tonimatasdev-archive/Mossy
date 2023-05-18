@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
+import net.tonimatasdev.mossy.api.World;
 import net.tonimatasdev.mossy.generator.NoiseGenerator;
 import net.tonimatasdev.mossy.impl.BlockImpl;
 import net.tonimatasdev.mossy.impl.ItemImpl;
@@ -19,9 +20,9 @@ public class Mossy {
     public static void main(String[] args) {
         MinecraftServer minecraftServer = MinecraftServer.init();
 
-        overWorld = MinecraftServer.getInstanceManager().createInstanceContainer(DimensionType.OVERWORLD);
-
-        overWorld.setGenerator(new NoiseGenerator());
+        World world = new World("world", DimensionType.OVERWORLD);
+        overWorld = world.getInstanceContainer();
+        world.getInstanceContainer().setGenerator(new NoiseGenerator());
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         BlockImpl.register(eventHandler);

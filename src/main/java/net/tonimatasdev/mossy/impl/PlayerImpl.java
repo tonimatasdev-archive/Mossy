@@ -6,7 +6,6 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.event.player.PlayerChunkLoadEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -37,8 +36,11 @@ public class PlayerImpl {
 
         eventHandler.addListener(PlayerBlockBreakEvent.class, event -> {
             if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+
                 ItemEntity item = new ItemEntity(ItemStack.of(Objects.requireNonNull(event.getBlock().registry().material())));
                 item.setPickable(true);
+                item.setMergeable(true);
+                item.setMergeRange(1.6f);
                 Random random = new Random();
                 item.setVelocity(new Vec(random.nextDouble() * (2.5 - (-2.5)) + (-2.5), 3.7, random.nextDouble() * (2.5 - (-2.5)) + (-2.5)));
                 item.setPose(event.getPlayer().getPose());
