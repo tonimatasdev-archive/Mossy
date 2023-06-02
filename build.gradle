@@ -17,8 +17,9 @@ repositories {
 }
 
 dependencies {
-    libraries 'com.github.Minestom:Minestom:8ad2c7701f'
-    libraries 'de.articdive:jnoise:3.0.2'
+    //implementation 'org.jctools:jctools-core:4.0.1'
+    implementation 'io.github.jglrxavpok.hephaistos:common:2.5.3'
+
     libraries 'org.jetbrains:annotations:24.0.1'
 
     implementation configurations.libraries
