@@ -17,9 +17,6 @@ repositories {
 }
 
 dependencies {
-    //implementation 'org.jctools:jctools-core:4.0.1'
-    implementation 'io.github.jglrxavpok.hephaistos:common:2.5.3'
-
     libraries 'org.jetbrains:annotations:24.0.1'
 
     implementation configurations.libraries
