@@ -1,11 +1,10 @@
-package net.tonimatasdev.mossy.command;
+package net.tonimatasdev.mossy.commands;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 
@@ -20,7 +19,7 @@ public class GameModeCommand extends Command {
                         .append(Component.text(exception.getInput(), NamedTextColor.WHITE))
                         .append(Component.text("!"))));
 
-        ArgumentEntity player = ArgumentType.Entity("targets").onlyPlayers(true);
+        ArgumentType.Entity("targets").onlyPlayers(true);
 
         setDefaultExecutor((sender, context) -> {
             String commandName = context.getCommandName();
