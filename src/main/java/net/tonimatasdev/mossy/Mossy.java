@@ -1,24 +1,36 @@
 package net.tonimatasdev.mossy;
 
-import net.tonimatasdev.mossy.network.ConnectionManager;
-
-import java.io.IOException;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.world.DimensionType;
+import net.tonimatasdev.mossy.api.World;
+import net.tonimatasdev.mossy.generator.NoiseGenerator;
+import net.tonimatasdev.mossy.impl.BlockImpl;
+import net.tonimatasdev.mossy.impl.ItemImpl;
+import net.tonimatasdev.mossy.impl.PlayerImpl;
+import net.tonimatasdev.mossy.manager.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Mossy {
-    private static final int SERVER_PORT = 25565;
-    private static ConnectionManager connectionManager;
+    public static Logger logger = LoggerFactory.getLogger(Mossy.class);
+    public static InstanceContainer overWorld;
 
     public static void main(String[] args) {
-        int port = 25565; // Puerto del servidor de Minecraft por defecto
-        try {
-            connectionManager = new ConnectionManager(port);
-            connectionManager.start();
-        } catch (IOException e) {
-            System.out.println("Error starting server: " + e.getMessage());
-        }
-    }
+        MinecraftServer minecraftServer = MinecraftServer.init();
 
-    public static ConnectionManager getConnectionManager() {
-        return connectionManager;
+        World world = new World("world", DimensionType.OVERWORLD);
+        overWorld = world.getInstanceContainer();
+        world.getInstanceContainer().setGenerator(new NoiseGenerator());
+
+        GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
+        BlockImpl.register(eventHandler);
+        ItemImpl.register(eventHandler);
+        PlayerImpl.register(eventHandler);
+
+        Command.register();
+
+        minecraftServer.start("0.0.0.0", 25565);
     }
 }

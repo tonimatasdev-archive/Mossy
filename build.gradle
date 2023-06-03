@@ -17,6 +17,9 @@ repositories {
 }
 
 dependencies {
+    libraries 'com.github.Minestom:Minestom:9b15acf4fa'
+    libraries 'de.articdive:jnoise:3.0.2'
+
     libraries 'org.jetbrains:annotations:24.0.1'
 
     implementation configurations.libraries
