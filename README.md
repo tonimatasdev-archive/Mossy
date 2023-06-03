@@ -1,2 +1,2 @@
 # Mossy
-A basic server software made for learning.
+The first community vanilla reimplementation using Minestom
