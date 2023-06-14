@@ -2,6 +2,7 @@ package net.tonimatasdev.mossy;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
 import net.tonimatasdev.mossy.api.World;
@@ -23,13 +24,19 @@ public class Mossy {
         World world = new World("world", DimensionType.OVERWORLD);
         overWorld = world.getInstanceContainer();
         world.getInstanceContainer().setGenerator(new NoiseGenerator());
+        logger.info("World enabled.");
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         BlockImpl.register(eventHandler);
         ItemImpl.register(eventHandler);
         PlayerImpl.register(eventHandler);
+        logger.info("All events registered.");
 
         Command.register();
+        logger.info("All commands registered.");
+
+        MojangAuth.init(); // Premium
+
 
         minecraftServer.start("0.0.0.0", 25565);
     }
