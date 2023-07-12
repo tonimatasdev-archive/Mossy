@@ -1,4 +1,4 @@
-package net.tonimatasdev.mossy.impl;
+package net.tonimatasdev.mossy.events;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -10,7 +10,7 @@ import net.minestom.server.event.item.PickupItemEvent;
 
 import java.time.Duration;
 
-public class ItemImpl {
+public class ItemEvent {
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PickupItemEvent.class, event -> {
             if (event.getEntity() instanceof Player player) {

@@ -7,9 +7,9 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
 import net.tonimatasdev.mossy.api.World;
 import net.tonimatasdev.mossy.generator.NoiseGenerator;
-import net.tonimatasdev.mossy.impl.BlockImpl;
-import net.tonimatasdev.mossy.impl.ItemImpl;
-import net.tonimatasdev.mossy.impl.PlayerImpl;
+import net.tonimatasdev.mossy.events.BlockEvent;
+import net.tonimatasdev.mossy.events.ItemEvent;
+import net.tonimatasdev.mossy.events.PlayerEvent;
 import net.tonimatasdev.mossy.manager.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +27,9 @@ public class Mossy {
         logger.info("World enabled.");
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
-        BlockImpl.register(eventHandler);
-        ItemImpl.register(eventHandler);
-        PlayerImpl.register(eventHandler);
+        BlockEvent.register(eventHandler);
+        ItemEvent.register(eventHandler);
+        PlayerEvent.register(eventHandler);
         logger.info("All events registered.");
 
         Command.register();

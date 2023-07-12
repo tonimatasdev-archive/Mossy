@@ -1,4 +1,4 @@
-package net.tonimatasdev.mossy.impl;
+package net.tonimatasdev.mossy.events;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -14,7 +14,7 @@ import net.tonimatasdev.mossy.Mossy;
 import java.util.Objects;
 import java.util.Random;
 
-public class PlayerImpl {
+public class PlayerEvent {
     @SuppressWarnings("UnstableApiUsage")
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PlayerLoginEvent.class, event -> {
