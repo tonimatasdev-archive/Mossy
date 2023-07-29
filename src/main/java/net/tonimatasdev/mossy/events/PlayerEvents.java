@@ -14,7 +14,7 @@ import net.tonimatasdev.mossy.Mossy;
 import java.util.Objects;
 import java.util.Random;
 
-public class PlayerEvent {
+public class PlayerEvents {
     @SuppressWarnings("UnstableApiUsage")
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PlayerLoginEvent.class, event -> {

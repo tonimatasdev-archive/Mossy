@@ -7,9 +7,9 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
 import net.tonimatasdev.mossy.api.World;
 import net.tonimatasdev.mossy.generator.NoiseGenerator;
-import net.tonimatasdev.mossy.events.BlockEvent;
-import net.tonimatasdev.mossy.events.ItemEvent;
-import net.tonimatasdev.mossy.events.PlayerEvent;
+import net.tonimatasdev.mossy.events.BlockEvents;
+import net.tonimatasdev.mossy.events.ItemEvents;
+import net.tonimatasdev.mossy.events.PlayerEvents;
 import net.tonimatasdev.mossy.manager.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +24,12 @@ public class Mossy {
         World world = new World("world", DimensionType.OVERWORLD);
         overWorld = world.getInstanceContainer();
         world.getInstanceContainer().setGenerator(new NoiseGenerator());
-        logger.info("World enabled.");
+        logger.info("World loaded.");
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
-        BlockEvent.register(eventHandler);
-        ItemEvent.register(eventHandler);
-        PlayerEvent.register(eventHandler);
+        BlockEvents.register(eventHandler);
+        ItemEvents.register(eventHandler);
+        PlayerEvents.register(eventHandler);
         logger.info("All events registered.");
 
         Command.register();

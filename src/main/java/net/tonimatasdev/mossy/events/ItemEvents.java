@@ -10,7 +10,7 @@ import net.minestom.server.event.item.PickupItemEvent;
 
 import java.time.Duration;
 
-public class ItemEvent {
+public class ItemEvents {
     public static void register(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PickupItemEvent.class, event -> {
             if (event.getEntity() instanceof Player player) {
