@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
+import net.tonimatasdev.mossy.Mossy;
 
 /**
  * Save the server
@@ -15,8 +16,8 @@ public class SaveAllCommand extends Command {
     }
     private void execute(CommandSender player, CommandContext arguments) {
         MinecraftServer.getInstanceManager().getInstances().forEach(i -> {
-            i.saveChunksToStorage();
-            LOGGER.info("Saved dimension " + i.getDimensionType().getName());
+            Mossy.save();
+            //LOGGER.info("Saved dimension " + i.getDimensionType().getName());
         });
     }
 }

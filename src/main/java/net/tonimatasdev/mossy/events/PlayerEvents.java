@@ -7,10 +7,12 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.instance.LightingChunk;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.tonimatasdev.mossy.Mossy;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
@@ -36,7 +38,7 @@ public class PlayerEvents {
 
         eventHandler.addListener(PlayerBlockBreakEvent.class, event -> {
             if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-
+                LightingChunk.relight(event.getInstance(), Collections.singleton(event.getPlayer().getChunk()));
                 ItemEntity item = new ItemEntity(ItemStack.of(Objects.requireNonNull(event.getBlock().registry().material())));
                 item.setPickable(true);
                 item.setMergeable(true);
