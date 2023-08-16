@@ -16,7 +16,7 @@ import net.tonimatasdev.mossy.manager.Command;
 import java.util.logging.Logger;
 
 public class Mossy {
-    public static Logger logger = Logger.getLogger("Mossy");
+    public static Logger logger = Logger.getLogger("Reforged");
     public static InstanceContainer overWorld;
     public static InstanceContainer nether;
     public static InstanceContainer end;
@@ -32,12 +32,12 @@ public class Mossy {
         logger.info("World \"world\" loaded.");
 
         nether = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
-        nether.setChunkLoader(new AnvilLoader("world"));
+        nether.setChunkLoader(new AnvilLoader("nether"));
         nether.setGenerator(new NoiseGenerator());
         logger.info("World \"nether\" loaded.");
 
         end = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
-        end.setChunkLoader(new AnvilLoader("world"));
+        end.setChunkLoader(new AnvilLoader("end"));
         end.setGenerator(new NoiseGenerator());
         logger.info("World \"end\" loaded.");
 
