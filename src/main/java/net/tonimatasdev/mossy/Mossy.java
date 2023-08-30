@@ -6,7 +6,7 @@ import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
-import net.minestom.server.world.DimensionType;
+import net.tonimatasdev.mossy.api.MossyDimensionType;
 import net.tonimatasdev.mossy.events.BlockEvents;
 import net.tonimatasdev.mossy.events.ItemEvents;
 import net.tonimatasdev.mossy.events.PlayerEvents;
@@ -26,17 +26,17 @@ public class Mossy {
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
-        overWorld = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
+        overWorld = instanceManager.createInstanceContainer(MossyDimensionType.OVERWORLD);
         overWorld.setChunkLoader(new AnvilLoader("world"));
         overWorld.setGenerator(new NoiseGenerator());
         logger.info("World \"world\" loaded.");
 
-        nether = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
+        nether = instanceManager.createInstanceContainer(MossyDimensionType.NETHER);
         nether.setChunkLoader(new AnvilLoader("nether"));
         nether.setGenerator(new NoiseGenerator());
         logger.info("World \"nether\" loaded.");
 
-        end = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
+        end = instanceManager.createInstanceContainer(MossyDimensionType.END);
         end.setChunkLoader(new AnvilLoader("end"));
         end.setGenerator(new NoiseGenerator());
         logger.info("World \"end\" loaded.");

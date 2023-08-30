@@ -3,7 +3,7 @@ package net.tonimatasdev.mossy.api;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 
-public class ReforgedDimensionType {
+public class MossyDimensionType {
     public static final DimensionType OVERWORLD = DimensionType.builder(NamespaceID.from("minecraft:overworld"))
             .ultrawarm(false)
             .natural(true)
