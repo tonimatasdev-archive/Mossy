@@ -1,2 +1,2 @@
 # Mossy
-The first community vanilla reimplementation using Minestom
+Try of vanilla reimplementation using Minestom
