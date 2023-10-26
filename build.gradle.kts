@@ -1,3 +1,5 @@
+@file:Suppress("VulnerableLibrariesLocal")
+
 plugins {
     id("java")
     id("application")
@@ -10,8 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.hollowcube:minestom-ce:34558e75ee")
-    implementation("de.articdive:jnoise:3.0.2")
+    implementation("dev.hollowcube:minestom-ce:5bcc72b911")
 
     implementation("org.jetbrains:annotations:24.0.1")
 }

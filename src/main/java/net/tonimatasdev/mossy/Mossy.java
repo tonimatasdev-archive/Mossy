@@ -6,11 +6,11 @@ import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
 import net.tonimatasdev.mossy.events.BlockEvents;
 import net.tonimatasdev.mossy.events.ItemEvents;
 import net.tonimatasdev.mossy.events.PlayerEvents;
-import net.tonimatasdev.mossy.generator.NoiseGenerator;
 import net.tonimatasdev.mossy.manager.Command;
 
 import java.util.logging.Logger;
@@ -26,19 +26,21 @@ public class Mossy {
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
-        overWorld = instanceManager.createInstanceContainer(MossyDimensionType.OVERWORLD);
+        MossyDimensionType mossyDimensionType = new MossyDimensionType();
+
+        overWorld = instanceManager.createInstanceContainer(mossyDimensionType.getOverworld());
         overWorld.setChunkLoader(new AnvilLoader("world"));
-        overWorld.setGenerator(new NoiseGenerator());
+        overWorld.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
         logger.info("World \"world\" loaded.");
 
-        nether = instanceManager.createInstanceContainer(MossyDimensionType.NETHER);
+        nether = instanceManager.createInstanceContainer(mossyDimensionType.getNether());
         nether.setChunkLoader(new AnvilLoader("nether"));
-        nether.setGenerator(new NoiseGenerator());
+        nether.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
         logger.info("World \"nether\" loaded.");
 
-        end = instanceManager.createInstanceContainer(MossyDimensionType.END);
+        end = instanceManager.createInstanceContainer(mossyDimensionType.getEnd());
+        end.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
         end.setChunkLoader(new AnvilLoader("end"));
-        end.setGenerator(new NoiseGenerator());
         logger.info("World \"end\" loaded.");
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
