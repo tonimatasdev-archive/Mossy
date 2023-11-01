@@ -1,8 +1,10 @@
 @file:Suppress("VulnerableLibrariesLocal")
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+
 plugins {
     id("java")
-    id("application")
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
@@ -20,7 +22,10 @@ dependencies {
 tasks.withType<Jar> {
     manifest {
         attributes(
-            "Main-Class" to "net.tonimatasdev.mossy.Mossy",
+            "Launcher-Agent-Class" to "net.tonimatasdev.mossy.launcher.Agent",
+            "Agent-Class" to "net.tonimatasdev.mossy.launcher.Agent",
+            "Premain-Class" to "net.tonimatasdev.mossy.launcher.Agent",
+            "Main-Class" to "net.tonimatasdev.mossy.launcher.Main",
             "Multi-Release" to true
         )
     }
