@@ -8,10 +8,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
-import net.tonimatasdev.mossy.events.BlockEvents;
-import net.tonimatasdev.mossy.events.InstanceEvents;
-import net.tonimatasdev.mossy.events.ItemEvents;
-import net.tonimatasdev.mossy.events.PlayerEvents;
+import net.tonimatasdev.mossy.events.*;
 import net.tonimatasdev.mossy.manager.Command;
 
 import java.util.logging.Logger;
@@ -49,6 +46,7 @@ public class Mossy {
         InstanceEvents.init(eventHandler);
         ItemEvents.init(eventHandler);
         PlayerEvents.init(eventHandler);
+        ServerEvents.init(eventHandler);
         logger.info("All events registered.");
 
         Command.register();
