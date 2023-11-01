@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
+import net.tonimatasdev.mossy.Mossy;
 
 /**
  * Stops the server
@@ -20,6 +21,7 @@ public class StopCommand extends Command {
     }
 
     private void execute(CommandSender player, CommandContext arguments) {
+        Mossy.save();
         MinecraftServer.stopCleanly();
     }
 }

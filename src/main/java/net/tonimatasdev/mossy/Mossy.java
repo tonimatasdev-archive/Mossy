@@ -9,6 +9,7 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
 import net.tonimatasdev.mossy.events.BlockEvents;
+import net.tonimatasdev.mossy.events.InstanceEvents;
 import net.tonimatasdev.mossy.events.ItemEvents;
 import net.tonimatasdev.mossy.events.PlayerEvents;
 import net.tonimatasdev.mossy.manager.Command;
@@ -44,9 +45,10 @@ public class Mossy {
         logger.info("World \"end\" loaded.");
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
-        BlockEvents.register(eventHandler);
-        ItemEvents.register(eventHandler);
-        PlayerEvents.register(eventHandler);
+        BlockEvents.init(eventHandler);
+        InstanceEvents.init(eventHandler);
+        ItemEvents.init(eventHandler);
+        PlayerEvents.init(eventHandler);
         logger.info("All events registered.");
 
         Command.register();

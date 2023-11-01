@@ -5,13 +5,14 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.instance.InstanceTickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PickupItemEvent;
 
 import java.time.Duration;
 
 public class ItemEvents {
-    public static void register(GlobalEventHandler eventHandler) {
+    public static void init(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PickupItemEvent.class, event -> {
             if (event.getEntity() instanceof Player player) {
                 player.getInventory().addItemStack(event.getItemStack());

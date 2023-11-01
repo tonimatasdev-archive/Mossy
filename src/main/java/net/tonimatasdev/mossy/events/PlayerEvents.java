@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class PlayerEvents {
     @SuppressWarnings("UnstableApiUsage")
-    public static void register(GlobalEventHandler eventHandler) {
+    public static void init(GlobalEventHandler eventHandler) {
         eventHandler.addListener(PlayerLoginEvent.class, event -> {
             event.setSpawningInstance(Mossy.overWorld);
 
