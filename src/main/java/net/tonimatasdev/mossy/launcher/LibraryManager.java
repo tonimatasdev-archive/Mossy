@@ -39,5 +39,6 @@ public class LibraryManager {
             "org.jetbrains:annotations:24.0.1",
             "org.slf4j:slf4j-api:2.0.7",
             "space.vectrix.flare:flare:2.0.1",
-            "space.vectrix.flare:flare-fastutil:2.0.1");
+            "space.vectrix.flare:flare-fastutil:2.0.1",
+            "net.minecrell:terminalconsoleappender:1.3.0");
 }

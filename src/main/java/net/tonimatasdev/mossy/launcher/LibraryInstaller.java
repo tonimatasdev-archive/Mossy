@@ -1,5 +1,7 @@
 package net.tonimatasdev.mossy.launcher;
 
+import net.tonimatasdev.mossy.logger.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,11 +41,11 @@ public class LibraryInstaller {
             try {
                 Agent.appendJarFile(jarFile);
             } catch (IOException e) {
-                System.out.println("Error on load libraries.");
+                Logger.error("Error on load libraries.");
                 break;
             }
         }
-        System.out.println("Libraries loaded. ( " + (System.currentTimeMillis() - time) + "ms)");
+        Logger.info("Libraries loaded. ( " + (System.currentTimeMillis() - time) + "ms)");
     }
 
     private static void downloadLibrary(String url, String jarDirectory, String jarName) {
@@ -60,10 +62,10 @@ public class LibraryInstaller {
                 }
                 outputStream.close();
                 inputStream.close();
-                System.out.println("Library downloaded: " + jarName);
+                Logger.info("Library downloaded: " + jarName);
             }
         } catch (IOException e) {
-            System.err.println("Error on download library: " + jarName);
+            Logger.error("Error on download library: " + jarName);
         }
     }
 }

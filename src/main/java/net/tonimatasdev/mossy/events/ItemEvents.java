@@ -5,7 +5,6 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
-import net.minestom.server.event.instance.InstanceTickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PickupItemEvent;
 
@@ -27,7 +26,7 @@ public class ItemEvents {
             item.setMergeable(true);
             item.setMergeRange(1.6f);
             item.setPickupDelay(Duration.ofMillis(2500));
-            item.setInstance(event.getInstance(), new Pos(pos.x() + 0.5, pos.y() + 0.5, pos.z() + 0.5));
+            item.setInstance(event.getPlayer().getInstance(), new Pos(pos.x(), pos.y() + 1.4, pos.z()));
             item.setVelocity(new Vec(0, 1, 0));
         });
     }

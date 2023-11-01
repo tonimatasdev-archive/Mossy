@@ -1,65 +1,62 @@
 package net.tonimatasdev.mossy;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.AnvilLoader;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
-import net.tonimatasdev.mossy.events.*;
-import net.tonimatasdev.mossy.manager.Command;
-
-import java.util.logging.Logger;
+import net.tonimatasdev.mossy.logger.Logger;
+import net.tonimatasdev.mossy.manager.CommandManager;
+import net.tonimatasdev.mossy.manager.EventManager;
+import net.tonimatasdev.mossy.util.ConsoleThread;
 
 public class Mossy {
-    public static Logger logger = Logger.getLogger("Reforged");
     public static InstanceContainer overWorld;
     public static InstanceContainer nether;
     public static InstanceContainer end;
 
     public static void main(String[] args) {
+        long time = System.currentTimeMillis();
         MinecraftServer minecraftServer = MinecraftServer.init();
-
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
-
         MossyDimensionType mossyDimensionType = new MossyDimensionType();
 
         overWorld = instanceManager.createInstanceContainer(mossyDimensionType.getOverworld());
         overWorld.setChunkLoader(new AnvilLoader("world"));
         overWorld.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
-        logger.info("World \"world\" loaded.");
+        Logger.info("World \"world\" loaded.");
 
         nether = instanceManager.createInstanceContainer(mossyDimensionType.getNether());
         nether.setChunkLoader(new AnvilLoader("nether"));
         nether.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
-        logger.info("World \"nether\" loaded.");
+        Logger.info("World \"nether\" loaded.");
 
         end = instanceManager.createInstanceContainer(mossyDimensionType.getEnd());
         end.setGenerator(unit -> unit.modifier().fillHeight(0, 40, Block.STONE));
         end.setChunkLoader(new AnvilLoader("end"));
-        logger.info("World \"end\" loaded.");
+        Logger.info("World \"end\" loaded.");
 
-        GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
-        BlockEvents.init(eventHandler);
-        InstanceEvents.init(eventHandler);
-        ItemEvents.init(eventHandler);
-        PlayerEvents.init(eventHandler);
-        ServerEvents.init(eventHandler);
-        logger.info("All events registered.");
+        Logger.error("XD");
+        Logger.warn("^");
 
-        Command.register();
-        logger.info("All commands registered.");
+        CommandManager.register();
+        EventManager.register();
 
         MojangAuth.init(); // Premium
 
         minecraftServer.start("0.0.0.0", 25565);
+        new ConsoleThread().start();
+        Logger.info("Done! (" + (System.currentTimeMillis() - time) + "ms)");
     }
 
-    public static void save() {
-        overWorld.saveChunksToStorage();
-        nether.saveChunksToStorage();
-        end.saveChunksToStorage();
+    public static void stop() {
+        long time = System.currentTimeMillis();
+        ConsoleThread.stopConsole();
+        MinecraftServer.getInstanceManager().getInstances().forEach(Instance::saveChunksToStorage);
+        MinecraftServer.stopCleanly();
+        Logger.info("Finish! (" + (System.currentTimeMillis() - time) + "ms)");
     }
 }

@@ -1,6 +1,5 @@
 package net.tonimatasdev.mossy.commands;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
@@ -16,12 +15,11 @@ public class StopCommand extends Command {
         setDefaultExecutor(this::execute);
     }
 
-    private boolean condition(CommandSender player, String commandName) {
+    private boolean condition(CommandSender sender, String commandName) {
         return true; // TODO: permissions
     }
 
-    private void execute(CommandSender player, CommandContext arguments) {
-        Mossy.save();
-        MinecraftServer.stopCleanly();
+    private void execute(CommandSender sender, CommandContext arguments) {
+        Mossy.stop();
     }
 }
