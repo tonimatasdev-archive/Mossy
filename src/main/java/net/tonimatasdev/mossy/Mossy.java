@@ -39,9 +39,6 @@ public class Mossy {
         end.setChunkLoader(new AnvilLoader("end"));
         Logger.info("World \"end\" loaded.");
 
-        Logger.error("XD");
-        Logger.warn("^");
-
         CommandManager.register();
         EventManager.register();
 

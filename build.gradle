@@ -1,0 +1,45 @@
+//file:noinspection VulnerableLibrariesLocal
+
+import dev.tonimatas.tasks.Artifacts
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id("java")
+    id("com.github.johnrengelman.shadow") version "7.1.0"
+}
+
+configurations {
+    libraries
+}
+
+repositories {
+    mavenCentral()
+    maven{url = "https://jitpack.io"}
+}
+
+dependencies {
+    implementation("dev.hollowcube:minestom-ce:5bcc72b911")
+    implementation("org.jetbrains:annotations:24.0.1")
+}
+
+jar {
+    def LIBRARIES = []
+    Artifacts.getDependencies(rootProject.configurations.implementation.copy()).forEach {
+        LIBRARIES.add(it.get())
+    }
+
+    from(rootProject.file("data/libraries.txt")) {
+        filter(ReplaceTokens, tokens: ["LIBRARIES": LIBRARIES.join("\n")])
+    }
+    manifest {
+        attributes(
+            "Launcher-Agent-Class": "net.tonimatasdev.mossy.launcher.Agent",
+            "Agent-Class": "net.tonimatasdev.mossy.launcher.Agent",
+            "Premain-Class": "net.tonimatasdev.mossy.launcher.Agent",
+            "Main-Class": "net.tonimatasdev.mossy.launcher.Main",
+            "Multi-Release": true
+        )
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

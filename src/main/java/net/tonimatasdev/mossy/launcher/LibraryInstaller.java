@@ -19,7 +19,7 @@ public class LibraryInstaller {
         List<JarFile> jarFiles = new ArrayList<>();
 
         for (String repository : LibraryManager.repositories) {
-            for (String library : LibraryManager.libraries) {
+            for (String library : LibraryManager.getLibraries()) {
                 String[] strings = library.split(":");
                 String jarPath = strings[0].replace(".", "/") + "/" + strings[1] + "/" + strings[2];
                 String jarName = strings[1] + "-" + strings[2] + ".jar";
