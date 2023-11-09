@@ -26,8 +26,8 @@ jobs:
       with:
         java-version: 18
         
-    - name: Build with Gradle
-      run: chmod +x ./gradlew
+    - name: Export jar with gradle
+      run: chmod +x ./gradlew jar
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
