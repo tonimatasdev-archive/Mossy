@@ -8,9 +8,9 @@ import net.tonimatasdev.mossy.commands.*;
 import net.tonimatasdev.mossy.logger.Logger;
 
 public class MossyCommandManager {
-    public static void init() {
-        CommandManager commandManager = MinecraftServer.getCommandManager();
+    private static final CommandManager commandManager = MinecraftServer.getCommandManager();
 
+    public static void init() {
         commandManager.register(new GameModeCommand());
         commandManager.register(new DifficultyCommand());
         commandManager.register(new MeCommand());
