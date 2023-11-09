@@ -18,8 +18,8 @@ public class LibraryInstaller {
         long time = System.currentTimeMillis();
         List<JarFile> jarFiles = new ArrayList<>();
 
-        for (String repository : LibraryManager.repositories) {
-            for (String library : LibraryManager.getLibraries()) {
+        for (String repository : LibraryManager.getResources(LibraryManager.Type.REPOSITORIES)) {
+            for (String library : LibraryManager.getResources(LibraryManager.Type.LIBRARIES)) {
                 String[] strings = library.split(":");
                 String jarPath = strings[0].replace(".", "/") + "/" + strings[1] + "/" + strings[2];
                 String jarName = strings[1] + "-" + strings[2] + ".jar";
@@ -50,6 +50,7 @@ public class LibraryInstaller {
 
     private static void downloadLibrary(String url, String jarDirectory, String jarName) {
         try {
+            System.out.println(url + "/" + jarName);
             HttpURLConnection connection = (HttpURLConnection) new URL(url + "/" + jarName).openConnection();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = connection.getInputStream();
