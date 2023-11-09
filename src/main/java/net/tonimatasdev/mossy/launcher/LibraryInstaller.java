@@ -50,7 +50,6 @@ public class LibraryInstaller {
 
     private static void downloadLibrary(String url, String jarDirectory, String jarName) {
         try {
-            System.out.println(url + "/" + jarName);
             HttpURLConnection connection = (HttpURLConnection) new URL(url + "/" + jarName).openConnection();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = connection.getInputStream();
