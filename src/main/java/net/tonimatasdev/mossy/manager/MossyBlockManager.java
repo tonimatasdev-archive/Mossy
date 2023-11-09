@@ -11,7 +11,7 @@ import net.tonimatasdev.mossy.logger.Logger;
 import java.util.Objects;
 
 public class MossyBlockManager {
-    private static BlockManager blockManager = MinecraftServer.getBlockManager();
+    private static final BlockManager blockManager = MinecraftServer.getBlockManager();
 
     public static void init() {
         registerHandler(Block.CHEST, new ChestBlockHandler());
