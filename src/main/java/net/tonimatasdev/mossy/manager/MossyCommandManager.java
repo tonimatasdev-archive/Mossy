@@ -3,12 +3,13 @@ package net.tonimatasdev.mossy.manager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.CommandManager;
 import net.tonimatasdev.mossy.commands.*;
 import net.tonimatasdev.mossy.logger.Logger;
 
-public class CommandManager {
-    public static void register() {
-        net.minestom.server.command.CommandManager commandManager = MinecraftServer.getCommandManager();
+public class MossyCommandManager {
+    public static void init() {
+        CommandManager commandManager = MinecraftServer.getCommandManager();
 
         commandManager.register(new GameModeCommand());
         commandManager.register(new DifficultyCommand());

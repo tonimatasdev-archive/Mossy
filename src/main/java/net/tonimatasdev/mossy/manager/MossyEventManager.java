@@ -5,8 +5,8 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.tonimatasdev.mossy.events.*;
 import net.tonimatasdev.mossy.logger.Logger;
 
-public class EventManager {
-    public static void register() {
+public class MossyEventManager {
+    public static void init() {
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         BlockEvents.init(eventHandler);
         InstanceEvents.init(eventHandler);

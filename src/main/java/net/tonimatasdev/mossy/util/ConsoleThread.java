@@ -15,7 +15,6 @@ public class ConsoleThread extends Thread {
     public void run() {
         while (!isStop) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("> ");
             String command = scanner.nextLine();
             MinecraftServer.getCommandManager().executeServerCommand(command);
         }

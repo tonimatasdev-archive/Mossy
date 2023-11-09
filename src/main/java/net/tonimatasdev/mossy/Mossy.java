@@ -9,8 +9,9 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
 import net.tonimatasdev.mossy.logger.Logger;
-import net.tonimatasdev.mossy.manager.CommandManager;
-import net.tonimatasdev.mossy.manager.EventManager;
+import net.tonimatasdev.mossy.manager.MossyCommandManager;
+import net.tonimatasdev.mossy.manager.MossyEventManager;
+import net.tonimatasdev.mossy.manager.MossyBlockManager;
 import net.tonimatasdev.mossy.util.ConsoleThread;
 
 public class Mossy {
@@ -39,8 +40,9 @@ public class Mossy {
         end.setChunkLoader(new AnvilLoader("end"));
         Logger.info("World \"end\" loaded.");
 
-        CommandManager.register();
-        EventManager.register();
+        MossyBlockManager.init();
+        MossyCommandManager.init();
+        MossyEventManager.init();
 
         MojangAuth.init(); // Premium
 
