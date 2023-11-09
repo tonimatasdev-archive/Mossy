@@ -31,7 +31,7 @@ jobs:
     - name: Give permissions to Gradle
       run: chmod +x ./gradlew
 
-    - name: Export har with Gradle
+    - name: Export jar with Gradle
       run: ./gradlew jar
 
     - name: Upload a Build Artifact
