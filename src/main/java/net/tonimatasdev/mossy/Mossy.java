@@ -9,9 +9,9 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.tonimatasdev.mossy.api.MossyDimensionType;
 import net.tonimatasdev.mossy.logger.Logger;
+import net.tonimatasdev.mossy.manager.MossyBlockManager;
 import net.tonimatasdev.mossy.manager.MossyCommandManager;
 import net.tonimatasdev.mossy.manager.MossyEventManager;
-import net.tonimatasdev.mossy.manager.MossyBlockManager;
 import net.tonimatasdev.mossy.util.ConsoleThread;
 
 public class Mossy {
@@ -21,6 +21,7 @@ public class Mossy {
 
     public static void main(String[] args) {
         long time = System.currentTimeMillis();
+
         MinecraftServer minecraftServer = MinecraftServer.init();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         MossyDimensionType mossyDimensionType = new MossyDimensionType();
