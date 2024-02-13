@@ -1,7 +1,5 @@
 //file:noinspection VulnerableLibrariesLocal
 
-
-import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
 import dev.tonimatas.tasks.Utils
 import org.apache.tools.ant.filters.ReplaceTokens
 
@@ -20,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.hollowcube:minestom-ce:5bcc72b911")
+    implementation("com.github.Minestom:Minestom:fe46ed4ac2")
     implementation("org.jetbrains:annotations:24.0.1")
 }
 
