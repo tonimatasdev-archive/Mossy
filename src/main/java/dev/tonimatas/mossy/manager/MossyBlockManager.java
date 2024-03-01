@@ -15,10 +15,10 @@ public class MossyBlockManager {
 
     public static void init() {
         registerHandler(Block.CHEST, new ChestBlockHandler());
-        Logger.info("All blocks registered.");
+        Logger.info("All block handlers registered.");
     }
 
     private static void registerHandler(Block block, BlockHandler blockHandler) {
-        blockManager.registerHandler(NamespaceID.from("minecraft:" + block.name().toLowerCase()), () -> Objects.requireNonNull(block.withHandler(new ChestBlockHandler()).handler()));
+        blockManager.registerHandler(NamespaceID.from("minecraft:" + block.name().toLowerCase()), () -> Objects.requireNonNull(block.withHandler(blockHandler).handler()));
     }
 }
