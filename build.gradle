@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:fe46ed4ac2")
+    implementation("com.github.Minestom:Minestom:-SNAPSHOT")
     implementation("org.jetbrains:annotations:24.0.1")
 }
 
