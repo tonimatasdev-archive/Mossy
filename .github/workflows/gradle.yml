@@ -75,4 +75,4 @@ jobs:
 
       - name: Run
         timeout-minutes: 10
-        run: echo "stop" | java -jar mossy*.jar
+        run: echo "stop" | java -jar mossy*.jar -accepteula

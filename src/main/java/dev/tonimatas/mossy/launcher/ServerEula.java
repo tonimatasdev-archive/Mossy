@@ -45,19 +45,22 @@ public class ServerEula {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static boolean checkEula(Path path) throws IOException {
+    public static boolean checkEula(Path path, boolean accepteula) throws IOException {
         File file = path.toFile();
         ServerEula eula = new ServerEula(path);
-
+        
         if (!eula.hasAgreedToEULA()) {
-            Logger.warn("WARNING: It appears you have not agreed to the EULA.\nPlease read the EULA (https://account.mojang.com/documents/minecraft_eula) and type 'yes' to continue.");
-            System.out.print("Do you accept? (yes/no): ");
-
             int wrong = 0;
 
-            Scanner console = new Scanner(System.in);
+            Scanner console = null;
+            if (!accepteula) {
+                Logger.warn("WARNING: It appears you have not agreed to the EULA.\nPlease read the EULA (https://account.mojang.com/documents/minecraft_eula) and type 'yes' to continue.");
+                System.out.print("Do you accept? (yes/no): ");
+                console = new Scanner(System.in);
+            }
+            
             while (true) {
-                String answer = console.nextLine();
+                String answer = console != null ? console.nextLine() : "yes";
                 if (answer == null || answer.isBlank()) {
                     if (wrong++ >= 2) {
                         Logger.error("You have typed the wrong answer too many times. Exiting.");
