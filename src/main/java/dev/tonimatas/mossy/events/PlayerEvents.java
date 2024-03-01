@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import dev.tonimatas.mossy.Mossy;
 
@@ -24,6 +25,10 @@ public class PlayerEvents {
                 }
             }
             event.getPlayer().setRespawnPoint(new Pos(0, y, 0));
+        });
+        
+        eventHandler.addListener(PlayerBlockPlaceEvent.class, event -> {
+           if (event.getPlayer().getOpenInventory() != null) event.setCancelled(true);
         });
     }
 }

@@ -55,7 +55,10 @@ public class Mossy {
     public static void stop() {
         long time = System.currentTimeMillis();
         ConsoleThread.stopConsole();
-        MinecraftServer.getInstanceManager().getInstances().forEach(Instance::saveChunksToStorage);
+        MinecraftServer.getInstanceManager().getInstances().forEach(instance -> {
+            instance.saveChunksToStorage();
+            Logger.info("World " + instance.getDimensionName() + " saved.");
+        });
         MinecraftServer.stopCleanly();
         Logger.info("Finish! (" + (System.currentTimeMillis() - time) + "ms)");
     }

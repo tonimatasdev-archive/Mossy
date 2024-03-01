@@ -5,21 +5,21 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockHandler;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.type.AnvilInventory;
 import net.minestom.server.utils.NamespaceID;
 import org.jetbrains.annotations.NotNull;
 
-public class ChestBlockHandler implements BlockHandler {
-    private final Inventory inventory = new Inventory(InventoryType.CHEST_3_ROW, Component.translatable("container.chest"));
-    
+public class AnvilBlockHandler implements BlockHandler {
     @Override
-    public boolean onInteract(@NotNull Interaction interaction) {
-        // TODO: Make the logic
-        interaction.getPlayer().openInventory(inventory);
-        return BlockHandler.super.onInteract(interaction);
+    public boolean onInteract(@NotNull BlockHandler.Interaction interaction) {
+        interaction.getPlayer().openInventory(new Inventory(InventoryType.ANVIL, Component.translatable("container.repair")));
+        
+        // TODO: Add damage phases
+        return true;
     }
 
     @Override
     public @NotNull NamespaceID getNamespaceId() {
-        return Block.CHEST.namespace();
+        return Block.ANVIL.namespace();
     }
 }
