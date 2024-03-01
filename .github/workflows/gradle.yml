@@ -18,23 +18,61 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3.5.2
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 17
-        
-    - name: Give permissions to Gradle
-      run: chmod +x ./gradlew
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
 
-    - name: Export jar with Gradle
-      run: ./gradlew jar
+      - name: Give permissions to Gradle
+        run: chmod +x ./gradlew
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: Mossy
-        path: build/libs/**.jar
+      - name: Export jar with Gradle
+        run: ./gradlew jar
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: Mossy
+          path: build/libs/**.jar
+
+      - name: Put Mossy jar in an archive
+        working-directory: build/libs
+        run: |
+         tar -czf mossy.tar.gz mossy*.jar
+         mv mossy.tar.gz ../../
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mossy-jar
+          path: |
+            mossy.tar.gz
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: mossy-jar
+          path: .
+
+      - name: Extract Mossy
+        run: |
+          tar -xvf mossy.tar.gz
+
+      - name: Run
+        timeout-minutes: 10
+        run: echo "stop" | java -jar mossy*.jar
