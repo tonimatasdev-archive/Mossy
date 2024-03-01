@@ -35,10 +35,10 @@ jar {
 
     manifest {
         attributes(
-            "Launcher-Agent-Class": "net.tonimatasdev.mossy.launcher.Agent",
-            "Agent-Class": "net.tonimatasdev.mossy.launcher.Agent",
-            "Premain-Class": "net.tonimatasdev.mossy.launcher.Agent",
-            "Main-Class": "net.tonimatasdev.mossy.launcher.Main",
+            "Launcher-Agent-Class": "dev.tonimatas.mossy.launcher.Agent",
+            "Agent-Class": "dev.tonimatas.mossy.launcher.Agent",
+            "Premain-Class": "dev.tonimatas.mossy.launcher.Agent",
+            "Main-Class": "dev.tonimatas.mossy.launcher.Main",
             "Multi-Release": true
         )
     }
