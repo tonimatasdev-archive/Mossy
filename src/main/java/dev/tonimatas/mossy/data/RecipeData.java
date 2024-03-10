@@ -73,38 +73,24 @@ public class RecipeData {
             }
         }
         
-        Logger.info("Recipes loaded successfully. (" + recipes.size() + ")");
+        Logger.info("Recipes loaded successfully. (" + recipes.size() + " recipes)");
     }
     
     private static void parseCraftingShapeless(String recipeName, JsonObject jsonObject) {
         JsonElement group = jsonObject.get("group");
         JsonElement count = jsonObject.getAsJsonObject("result").get("count");
         String category = jsonObject.get("category").getAsString().toUpperCase(Locale.ENGLISH);
-        List<JsonElement> ingredients = jsonObject.getAsJsonArray("ingredients").asList();
         String result = jsonObject.getAsJsonObject("result").get("item").getAsString();
-        
-        addRecipe(new ShapelessRecipe(recipeName,
-                group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category),
-                getShapelessIngredients(ingredients), 
-                ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), 
-                        count != null ? count.getAsInt() : 1)) {
-            @Override
-            public boolean shouldShow(@NotNull Player player) {
-                return true;
-            }
-        });
-    }
-    
-    private static List<DeclareRecipesPacket.Ingredient> getShapelessIngredients(List<JsonElement> jsonElements) {
-       List<DeclareRecipesPacket.Ingredient> ingredients = new ArrayList<>();
-        for (JsonElement jsonElement : jsonElements) {
+
+        List<DeclareRecipesPacket.Ingredient> ingredients = new ArrayList<>();
+        for (JsonElement jsonElement : jsonObject.getAsJsonArray("ingredients").asList()) {
             if (jsonElement.isJsonObject()) {
                 ingredients.add(new DeclareRecipesPacket.Ingredient(List.of(ItemStack.of(Material.fromNamespaceId(jsonElement.getAsJsonObject().get("item").getAsString())))));
             }
-            
+
             if (jsonElement.isJsonArray()) {
                 List<ItemStack> itemStacks = new ArrayList<>();
-                
+
                 for (JsonElement jsonElement1 : jsonElement.getAsJsonArray().asList()) {
                     itemStacks.add(ItemStack.of(Material.fromNamespaceId(jsonElement1.getAsJsonObject().get("item").getAsString())));
                 }
@@ -113,7 +99,16 @@ public class RecipeData {
             }
         }
         
-        return ingredients;
+        addRecipe(new ShapelessRecipe(recipeName,
+                group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category),
+                ingredients, 
+                ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), 
+                        count != null ? count.getAsInt() : 1)) {
+            @Override
+            public boolean shouldShow(@NotNull Player player) {
+                return true;
+            }
+        });
     }
     
     private static void addRecipe(Recipe recipe) {
