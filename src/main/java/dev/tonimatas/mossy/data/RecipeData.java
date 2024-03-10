@@ -12,6 +12,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.DeclareRecipesPacket;
 import net.minestom.server.recipe.Recipe;
 import net.minestom.server.recipe.RecipeCategory;
+import net.minestom.server.recipe.ShapedRecipe;
 import net.minestom.server.recipe.ShapelessRecipe;
 import net.minestom.server.utils.NamespaceID;
 import org.jetbrains.annotations.NotNull;
@@ -46,19 +47,19 @@ public class RecipeData {
         for (String recipe : recipes) {
             InputStream inputStream = Main.class.getResourceAsStream("/" + recipe);
             if (inputStream == null) continue;
-            String recipeName = "minecraft:" + recipe.split("/")[recipe.split("/").length - 1].replace(".json", "");
+            String recipeId = "minecraft:" + recipe.split("/")[recipe.split("/").length - 1].replace(".json", "");
             Scanner scanner = new Scanner(inputStream);
             
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder string = new StringBuilder();
             while (scanner.hasNext()) {
-                stringBuilder.append(scanner.next());
+                string.append(scanner.nextLine());
             }
             
             scanner.close();
-            String jsonString = stringBuilder.toString();
+            String jsonString = string.toString();
             
             if (jsonString.contains("tag")) {
-                Logger.error("The recipe " + recipeName + " has tag. Unsupported at the moment.");
+                Logger.error("The recipe " + recipeId + " has tag. Unsupported at the moment.");
                 continue;
             }
             
@@ -68,15 +69,16 @@ public class RecipeData {
             String recipeType = jsonObject.get("type").getAsString();
             
             switch (recipeType) {
-                case "minecraft:crafting_shapeless" -> parseCraftingShapeless(recipeName, jsonObject);
-                default -> Logger.warn("Incompatible recipe type (" + recipeType + ") for " + recipeName);
+                case "minecraft:crafting_shapeless" -> parseCraftingShapeless(recipeId, jsonObject);
+                case "minecraft:crafting_shaped" -> parseCraftingShaped(recipeId, jsonObject);
+                default -> Logger.warn("Incompatible recipe type (" + recipeType + ") for " + recipeId);
             }
         }
         
         Logger.info("Recipes loaded successfully. (" + recipes.size() + " recipes)");
     }
     
-    private static void parseCraftingShapeless(String recipeName, JsonObject jsonObject) {
+    private static void parseCraftingShapeless(String recipeId, JsonObject jsonObject) {
         JsonElement group = jsonObject.get("group");
         JsonElement count = jsonObject.getAsJsonObject("result").get("count");
         String category = jsonObject.get("category").getAsString().toUpperCase(Locale.ENGLISH);
@@ -99,11 +101,43 @@ public class RecipeData {
             }
         }
         
-        addRecipe(new ShapelessRecipe(recipeName,
+        addRecipe(new ShapelessRecipe(recipeId,
                 group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category),
                 ingredients, 
                 ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), 
                         count != null ? count.getAsInt() : 1)) {
+            @Override
+            public boolean shouldShow(@NotNull Player player) {
+                return true;
+            }
+        });
+    }
+
+    private static void parseCraftingShaped(String recipeId, JsonObject jsonObject) {
+        JsonElement group = jsonObject.get("group");
+        JsonElement count = jsonObject.getAsJsonObject("result").get("count");
+        String category = jsonObject.get("category").getAsString().toUpperCase(Locale.ENGLISH);
+        String result = jsonObject.getAsJsonObject("result").get("item").getAsString();
+        JsonElement showNotification = jsonObject.getAsJsonObject("show_notification");
+        
+        List<DeclareRecipesPacket.Ingredient> ingredients = new ArrayList<>();
+        
+        List<JsonElement> pattern = jsonObject.getAsJsonArray("pattern").asList();
+
+        int with = pattern.get(0).getAsString().length();
+        int height = pattern.size();
+        
+        StringBuilder materialStringBuilder = new StringBuilder();
+        pattern.forEach(materialStringBuilder::append);
+        String materialString = materialStringBuilder.toString().replace("\"", "");
+        
+        
+        
+        
+        // TODO: Ingredients
+        
+        addRecipe(new ShapedRecipe(recipeId, with, height , group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category), ingredients , ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)),
+                count != null ? count.getAsInt() : 1), showNotification == null ? true : showNotification.getAsBoolean()) {
             @Override
             public boolean shouldShow(@NotNull Player player) {
                 return true;
