@@ -12,6 +12,7 @@ Try of vanilla reimplementation using Minestom
     - [ ] Smithing Transform
     - [ ] Other
 - [ ] Tags
+- [ ] Commands
 - [ ] Block Placements
 - [ ] Block Entities
 - [ ] Entities
