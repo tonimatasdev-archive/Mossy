@@ -11,10 +11,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.DeclareRecipesPacket;
-import net.minestom.server.recipe.Recipe;
-import net.minestom.server.recipe.RecipeCategory;
-import net.minestom.server.recipe.ShapedRecipe;
-import net.minestom.server.recipe.ShapelessRecipe;
+import net.minestom.server.recipe.*;
 import net.minestom.server.utils.NamespaceID;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +21,7 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings({"DataFlowIssue", "SimplifiableConditionalExpression"})
 public class RecipeData {
     private static final String recipesFolder = "data/minecraft/recipes";
     
@@ -72,6 +70,11 @@ public class RecipeData {
             switch (recipeType) {
                 case "minecraft:crafting_shapeless" -> parseCraftingShapeless(recipeId, jsonObject);
                 case "minecraft:crafting_shaped" -> parseCraftingShaped(recipeId, jsonObject);
+                case "minecraft:stonecutting" -> parseStoneCutting(recipeId, jsonObject);
+                case "minecraft:smoking" -> parseFurnaceRecipe(recipeId, jsonObject, "smoking");
+                case "minecraft:campfire_cooking" -> parseFurnaceRecipe(recipeId, jsonObject, "campfire_cooking");
+                case "minecraft:smelting" -> parseFurnaceRecipe(recipeId, jsonObject, "smelting");
+                case "minecraft:blasting" -> parseFurnaceRecipe(recipeId, jsonObject, "blasting");
                 default -> Logger.warn("Incompatible recipe type (" + recipeType + ") for " + recipeId);
             }
         }
@@ -87,7 +90,8 @@ public class RecipeData {
 
         List<DeclareRecipesPacket.Ingredient> ingredients = RecipeUtils.getShapelessIngredients(jsonObject.getAsJsonArray("ingredients"));
         
-        addRecipe(new ShapelessRecipe(recipeId,
+        addRecipe(new ShapelessRecipe(
+                recipeId,
                 group == null ? "" : group.getAsString(), 
                 RecipeCategory.Crafting.valueOf(category),
                 ingredients, 
@@ -118,7 +122,8 @@ public class RecipeData {
         Map<Character, List<Material>> keys = RecipeUtils.getShapedKeys(jsonObject.getAsJsonObject("key"));
         List<DeclareRecipesPacket.Ingredient> ingredients = RecipeUtils.getShapedIngredients(keys, materialString);
         
-        addRecipe(new ShapedRecipe(recipeId,
+        addRecipe(new ShapedRecipe(
+                recipeId,
                 with,
                 height,
                 group == null ? "" : group.getAsString(),
@@ -131,6 +136,68 @@ public class RecipeData {
                 return true;
             }
         });
+    }
+    
+    private static void parseStoneCutting(String recipeId, JsonObject jsonObject) {
+        JsonElement group = jsonObject.get("group");
+        int count = jsonObject.get("count").getAsInt();
+        String result = jsonObject.get("result").getAsString();
+        String ingredient = jsonObject.getAsJsonObject("ingredient").get("item").getAsString();
+        
+        addRecipe(new StonecutterRecipe(
+                recipeId,
+                group == null ? "" : group.getAsString(),
+                new DeclareRecipesPacket.Ingredient(Collections.singletonList(ItemStack.of(Material.fromNamespaceId(ingredient)))),
+                ItemStack.of(Material.fromNamespaceId(result), count)
+        ) {
+            @Override
+            public boolean shouldShow(@NotNull Player player) {
+                return true;
+            }
+        });
+    }
+    
+    private static void parseFurnaceRecipe(String recipeId, JsonObject jsonObject, String type) {
+        JsonElement group = jsonObject.get("group");
+        String category = jsonObject.get("category").getAsString().toUpperCase(Locale.ENGLISH);
+        Material material = Material.fromNamespaceId(jsonObject.get("result").getAsString());
+        float experience = jsonObject.get("experience").getAsFloat();
+        int cookingtime = jsonObject.get("cookingtime").getAsInt();
+        
+        
+        Recipe recipe = switch (type) {
+            case "smoking" -> new SmokingRecipe(recipeId, group == null ? "" : group.getAsString(), RecipeCategory.Cooking.valueOf(category), ItemStack.of(material), experience, cookingtime) {
+                @Override
+                public boolean shouldShow(@NotNull Player player) {
+                    return true;
+                }
+            };
+            
+            case "campfire_cooking" -> new CampfireCookingRecipe(recipeId, group == null ? "" : group.getAsString(), RecipeCategory.Cooking.valueOf(category), ItemStack.of(material), experience, cookingtime) {
+                @Override
+                public boolean shouldShow(@NotNull Player player) {
+                    return true;
+                }
+            };
+
+            case "smelting" -> new SmeltingRecipe(recipeId, group == null ? "" : group.getAsString(), RecipeCategory.Cooking.valueOf(category), ItemStack.of(material), experience, cookingtime) {
+                @Override
+                public boolean shouldShow(@NotNull Player player) {
+                    return true;
+                }
+            };
+
+            case "blasting" -> new BlastingRecipe(recipeId, group == null ? "" : group.getAsString(), RecipeCategory.Cooking.valueOf(category), ItemStack.of(material), experience, cookingtime) {
+                @Override
+                public boolean shouldShow(@NotNull Player player) {
+                    return true;
+                }
+            };
+            
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        };
+        
+        addRecipe(recipe);
     }
     
     private static void addRecipe(Recipe recipe) {

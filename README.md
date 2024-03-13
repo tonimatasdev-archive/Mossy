@@ -4,11 +4,11 @@ Try of vanilla reimplementation using Minestom
 - [ ] Recipes
     - [x] Shapeless
     - [x] Shaped
-    - [ ] Stone Cutting
-    - [ ] Smelting
-    - [ ] Blasting
-    - [ ] Smoking
-    - [ ] Campfire Cooking
+    - [x] Stone Cutting
+    - [x] Smelting
+    - [x] Blasting
+    - [x] Smoking
+    - [x] Campfire Cooking
     - [ ] Smithing Transform
     - [ ] Other
 - [ ] Tags
