@@ -58,7 +58,7 @@ public class RecipeData {
             String jsonString = string.toString();
             
             if (jsonString.contains("tag")) {
-                Logger.error("The recipe " + recipeId + " has tag. Unsupported at the moment.");
+                if (Mossy.debug) Logger.error("The recipe " + recipeId + " has tag. Unsupported at the moment.");
                 continue;
             }
             
@@ -75,7 +75,9 @@ public class RecipeData {
                 case "minecraft:campfire_cooking" -> parseFurnaceRecipe(recipeId, jsonObject, "campfire_cooking");
                 case "minecraft:smelting" -> parseFurnaceRecipe(recipeId, jsonObject, "smelting");
                 case "minecraft:blasting" -> parseFurnaceRecipe(recipeId, jsonObject, "blasting");
-                default -> Logger.warn("Incompatible recipe type (" + recipeType + ") for " + recipeId);
+                default -> {
+                    if (Mossy.debug) Logger.warn("Incompatible recipe type (" + recipeType + ") for " + recipeId);
+                }
             }
         }
         

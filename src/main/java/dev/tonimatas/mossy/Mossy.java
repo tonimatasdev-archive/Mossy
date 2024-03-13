@@ -14,8 +14,11 @@ import dev.tonimatas.mossy.manager.MossyBlockManager;
 import dev.tonimatas.mossy.manager.MossyCommandManager;
 import dev.tonimatas.mossy.manager.MossyEventManager;
 
+import java.util.Arrays;
+
 public class Mossy {
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static boolean debug = false;
     public static InstanceContainer overWorld;
     public static InstanceContainer nether;
     public static InstanceContainer end;
@@ -23,6 +26,8 @@ public class Mossy {
     public static void main(String[] args) {
         long time = System.currentTimeMillis();
 
+        debug = Arrays.stream(args).toList().contains("-debug");
+        
         MinecraftServer minecraftServer = MinecraftServer.init();
         MinecraftServer.getBiomeManager().loadVanillaBiomes();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
