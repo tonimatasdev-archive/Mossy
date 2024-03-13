@@ -1,9 +1,6 @@
 package dev.tonimatas.mossy.manager;
 
-import dev.tonimatas.mossy.blocks.AnvilBlockHandler;
-import dev.tonimatas.mossy.blocks.ChestBlockHandler;
-import dev.tonimatas.mossy.blocks.ChippedAnvilBlockHandler;
-import dev.tonimatas.mossy.blocks.DamagedAnvilBlockHandler;
+import dev.tonimatas.mossy.blocks.*;
 import dev.tonimatas.mossy.logger.Logger;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.block.Block;
@@ -20,6 +17,7 @@ public class MossyBlockManager {
         registerHandler(Block.ANVIL, new AnvilBlockHandler());
         registerHandler(Block.DAMAGED_ANVIL, new DamagedAnvilBlockHandler());
         registerHandler(Block.CHIPPED_ANVIL, new ChippedAnvilBlockHandler());
+        registerHandler(Block.CRAFTING_TABLE, new CraftingTableBlockHandler());
         Logger.info("All block handlers registered.");
     }
 

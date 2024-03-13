@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import dev.tonimatas.mossy.Mossy;
 import dev.tonimatas.mossy.launcher.Main;
 import dev.tonimatas.mossy.logger.Logger;
+import dev.tonimatas.mossy.util.RecipeUtils;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
@@ -84,28 +85,13 @@ public class RecipeData {
         String category = jsonObject.get("category").getAsString().toUpperCase(Locale.ENGLISH);
         String result = jsonObject.getAsJsonObject("result").get("item").getAsString();
 
-        List<DeclareRecipesPacket.Ingredient> ingredients = new ArrayList<>();
-        for (JsonElement jsonElement : jsonObject.getAsJsonArray("ingredients").asList()) {
-            if (jsonElement.isJsonObject()) {
-                ingredients.add(new DeclareRecipesPacket.Ingredient(List.of(ItemStack.of(Material.fromNamespaceId(jsonElement.getAsJsonObject().get("item").getAsString())))));
-            }
-
-            if (jsonElement.isJsonArray()) {
-                List<ItemStack> itemStacks = new ArrayList<>();
-
-                for (JsonElement jsonElement1 : jsonElement.getAsJsonArray().asList()) {
-                    itemStacks.add(ItemStack.of(Material.fromNamespaceId(jsonElement1.getAsJsonObject().get("item").getAsString())));
-                }
-
-                ingredients.add(new DeclareRecipesPacket.Ingredient(itemStacks));
-            }
-        }
+        List<DeclareRecipesPacket.Ingredient> ingredients = RecipeUtils.getShapelessIngredients(jsonObject.getAsJsonArray("ingredients"));
         
         addRecipe(new ShapelessRecipe(recipeId,
-                group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category),
+                group == null ? "" : group.getAsString(), 
+                RecipeCategory.Crafting.valueOf(category),
                 ingredients, 
-                ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), 
-                        count != null ? count.getAsInt() : 1)) {
+                ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), count != null ? count.getAsInt() : 1)) {
             @Override
             public boolean shouldShow(@NotNull Player player) {
                 return true;
@@ -120,8 +106,6 @@ public class RecipeData {
         String result = jsonObject.getAsJsonObject("result").get("item").getAsString();
         JsonElement showNotification = jsonObject.getAsJsonObject("show_notification");
         
-        List<DeclareRecipesPacket.Ingredient> ingredients = new ArrayList<>();
-        
         List<JsonElement> pattern = jsonObject.getAsJsonArray("pattern").asList();
 
         int with = pattern.get(0).getAsString().length();
@@ -131,13 +115,17 @@ public class RecipeData {
         pattern.forEach(materialStringBuilder::append);
         String materialString = materialStringBuilder.toString().replace("\"", "");
         
+        Map<Character, List<Material>> keys = RecipeUtils.getShapedKeys(jsonObject.getAsJsonObject("key"));
+        List<DeclareRecipesPacket.Ingredient> ingredients = RecipeUtils.getShapedIngredients(keys, materialString);
         
-        
-        
-        // TODO: Ingredients
-        
-        addRecipe(new ShapedRecipe(recipeId, with, height , group == null ? "" : group.getAsString(), RecipeCategory.Crafting.valueOf(category), ingredients , ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)),
-                count != null ? count.getAsInt() : 1), showNotification == null ? true : showNotification.getAsBoolean()) {
+        addRecipe(new ShapedRecipe(recipeId,
+                with,
+                height,
+                group == null ? "" : group.getAsString(),
+                RecipeCategory.Crafting.valueOf(category),
+                ingredients,
+                ItemStack.of(Material.fromNamespaceId(NamespaceID.from(result)), count != null ? count.getAsInt() : 1),
+                showNotification == null ? true : showNotification.getAsBoolean()) {
             @Override
             public boolean shouldShow(@NotNull Player player) {
                 return true;
