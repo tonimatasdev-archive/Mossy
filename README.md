@@ -11,6 +11,7 @@ Try of vanilla reimplementation using Minestom
     - [ ] Campfire Cooking
     - [ ] Smithing Transform
     - [ ] Other
+- [ ] Tags
 - [ ] Block Placements
 - [ ] Block Entities
 - [ ] Entities
